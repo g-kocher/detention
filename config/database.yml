@@ -1,14 +1,14 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: sample_postgres_development
+  database: detention_development
   pool: 5
-  username: detention_development
+  username: 
   password:
 test:
   adapter: postgresql
   encoding: unicode
-  database: sample_postgres_test
+  database: detention_test
   pool: 5
-  username: detention_test
+  username:
   password:
