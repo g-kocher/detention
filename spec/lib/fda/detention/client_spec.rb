@@ -1,47 +1,91 @@
 # coding: utf-8
+require 'spec_helper'
 require 'nokogiri'
+require 'date'
+require 'open-uri'
 
 module FDA
   module Detention
     class Client
+      attr_reader :url
 
       def initialize url
         @url = url
       end
 
-      def parse html #returns an array of company hashes
-        selector = "//span//div[@class='textbody_level1']//div[1]"
-        page(html).xpath(selector).map do |item|
-          company = {}
-          company[:name] = item.text
-          company[:address] = format_address(item.xpath("..").text)
-          company
+      def parse html
+        build_companies_from extracted_attributes(html)
+      end
+
+
+
+      private
+      def extracted_attributes html
+        doc = Nokogiri::HTML html
+        classes = "@class='textbody_level1' or @class='textbody_level2' or @class='textbody_level3' or @class='textbody_level4'"
+        path = "//span[@id='user_provided']/div[#{classes}]"
+        doc.xpath(path).map do |attribute|
+          attribute unless attribute.xpath("attribute::align").text == 'center'
+        end.compact
+      end
+
+      def build_companies_from attributes
+        companies = []
+        i = -1
+        j = 0
+        attributes.each do |attribute|
+          case attribute.xpath("attribute::class").text 
+          when "textbody_level1"
+            i += 1
+            j = -1
+            company = {}
+            company[:name] = attribute.xpath("./div[1]").text
+            company[:address] = format_address attribute.text
+            companies[i] = company
+          when "textbody_level2"
+            j += 1
+            company = companies[i]
+            company[:products] ||= []
+            company[:products][j] ||= {}
+            company[:products][j][:name] = attribute.xpath('./div[1]').text.strip
+            company[:products][j][:date] = format_date attribute.xpath('./div[2]').text
+            companies[i] = company
+          when "textbody_level3"
+            text = attribute.text
+            if text =~ /Notes:Problem/
+              problems = text.split(";").drop(1).each {|i| i.strip!}
+              companies[i][:products][j][:problems] = problems
+            end
+            if text =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}/
+              companies[i][:products][j][:date] = format_date text
+            end
+            companies[i][:products][j]
+          when "textbody_level4"
+            problems = format_problems attribute.xpath("./small").text
+            companies[i][:products][j][:problems] = problems
+          end
         end
+        companies
       end
 
       def format_address raw
-        raw.rstrip.split("\n").drop(3).map{|s| s.gsub(",", "").strip}.join(", ")
+        raw.rstrip.split("\n").drop(3).map do |s|
+          s.gsub(",", "").strip
+        end.join(", ")
       end
 
-      def companies html
-        selector = "//span//div[@class='textbody_level1']//div[1]"
-        list = countries html
-        page(html).xpath(selector).map do |company|
-          company.text unless list.include?(company.text)
+      def format_date raw
+        if raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}\s/
+          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}\s)/.match(raw).captures.first
+          Date.strptime(date, "%m/%d/%Y")
+        elsif raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}\s/
+          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}\s)/.match(raw).captures.first
+          Date.strptime(date, "%m/%d/%y")
         end
       end
-
-      def countries html
-        selector = "//span//div[@class='textbody_level1'][@align='center']"
-        page(html).xpath(selector).map do |country|
-          country.text
-        end
+      def format_problems raw
+        raw.sub("Problems:", "").gsub("\n", "").strip.split(";").each {|i| i.strip!}
       end
-
-      def page html
-        page = Nokogiri::HTML html
-      end
-
 
     end
   end
@@ -52,48 +96,64 @@ module FDA
   module Detention
     describe Client do
       
-      let(:detention_link) { 'http://www.accessdata.fda.gov/cms_ia/importalert_259.html' }
-      let(:html) { File.read(File.join('spec', 'fixtures', 'import.html')) }
-      let(:detentions) { Client.new(detention_link).parse html }
-
-      context 'internal features' do
- 
-        it 'generates a list of countries' do
-          countries = Client.new(detention_link).countries html
-          expect(countries.first).to eq 'AFGHANISTAN'
+      let(:client) { Client.new 'example.com/fda/import' }
+      
+      describe '#initialize' do 
+        it 'stores the link' do
+          expect(client.url).to eq 'example.com/fda/import'
         end
-
-        it 'generates a list of companies' do
-          companies = Client.new(detention_link).companies html
-          expect(companies.first).to eq 'Haji Bashir Ahmad Commercial Firm'
-        end
-
       end
 
+      describe '#parse' do
+        let(:html)       { Factory.detention_data }
+        let(:detentions) { client.parse html}
+        let(:detention)  { detentions.first }
+        let(:product)    { detention[:products].first }
 
-      context 'parses HTML' do
+        context 'For normal enteries' do
+          let(:detention)  { detentions.first }
+          let(:product)    { detention[:products].first }
+          let(:problem)    { product[:problems].first }
+          it 'extracts the company name' do
+            expect(detention[:name]).to eq "Haji Bashir Ahmad Commercial Firm"
+          end
 
-        it 'extracts the first company' do
-          detention = detentions.first
-          expect(detention[:name]).to eq 'Haji Bashir Ahmad Commercial Firm'
+          it 'extracts the company address' do
+            expect(detention[:address]).to eq "Charagh Ali Market, kabul, AF-KAB AFGHANISTAN"
+          end
+
+          it 'extracts the products' do
+            expect(detention[:products].class).to eq Array.new.class
+            expect(product[:name]).to eq '20 B - - 10  Raisins,  Dried or Paste'
+          end
+
+          it 'extracts the product date' do
+            expect(product[:date]).to eq Date.new(2013, 4, 20)
+          end
+
+          it 'extracts the problems' do
+            expect(product[:problems].class).to eq Array.new.class
+            expect(problem).to eq 'FLUSILAZOLE'
+          end
         end
 
-        it 'extracts the last company' do
-          detention = detentions.last
-          expect(detention[:name]).to eq 'Tamiska d.o.o.'
+        context 'old enteries' do
+          let(:detention)  { detentions[2] }
+          let(:product)    { detention[:products].first }
+          it 'extracts the correct date' do
+            expect(product[:date]).to eq Date.new(1998, 3, 16)
+          end
         end
 
-        it 'extracts the first company address' do
-          detention = detentions.first
-          expect(detention[:address]).to eq 'Charagh Ali Market, kabul, AF-KAB AFGHANISTAN'
+        context 'incorrectly input problems' do
+          let(:detention)  { detentions[-1] }
+          let(:product)    { detention[:products].first }
+          let(:problem)    { product[:problems].first }
+          it 'extracts the problem from the notes' do
+            expect(product[:problems].class).to eq Array.new.class
+            expect(problem).to eq 'Fenobucarb'
+          end
         end
-
-        it 'extracts the last company address' do
-          detention = detentions.last
-          expect(detention[:address]).to eq 'Skadarska bb, Pancevo, YU-NOTA YUGOSLAVIA'
-        end
-
-
       end
     end
   end
