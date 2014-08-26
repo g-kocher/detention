@@ -13,11 +13,14 @@ module FDA
         @url = url
       end
 
+      def fetch
+        html = get @url
+        parse html
+      end 
+
       def parse html
         build_companies_from extracted_attributes(html)
       end
-
-
 
       private
       def extracted_attributes html
@@ -95,8 +98,10 @@ end
 module FDA
   module Detention
     describe Client do
+
       
       let(:client) { Client.new 'example.com/fda/import' }
+      let(:html)       { Factory.detention_data }
       
       describe '#initialize' do 
         it 'stores the link' do
@@ -104,8 +109,18 @@ module FDA
         end
       end
 
+      describe '#fetch' do
+        let(:companies) { client.fetch }
+        before(:each) do
+          expect(client).to receive(:get).and_return(html)
+        end
+
+        it 'has companies' do
+          expect(companies.size).to eq 85
+        end
+      end
+
       describe '#parse' do
-        let(:html)       { Factory.detention_data }
         let(:detentions) { client.parse html}
         let(:detention)  { detentions.first }
         let(:product)    { detention[:products].first }
