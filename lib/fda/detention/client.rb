@@ -14,13 +14,17 @@ module FDA
       def fetch
         html = get @url
         parse html
-      end 
+      end
 
       def parse html
         build_companies_from extracted_attributes(html)
       end
 
       private
+      def get url
+        open url
+      end
+
       def extracted_attributes html
         doc = Nokogiri::HTML html
         classes = "@class='textbody_level1' or @class='textbody_level2' or @class='textbody_level3' or @class='textbody_level4'"
@@ -54,38 +58,41 @@ module FDA
           when "textbody_level3"
             text = attribute.text
             if text =~ /Notes:Problem/
-              problems = text.split(";").drop(1).each {|i| i.strip!}
-              companies[i][:products][j][:problems] = problems
+              pesticides = text.gsub(/[\n\r\t]/,'').split(";").drop(1).map {|i| i.downcase.strip}
+              companies[i][:products][j][:pesticides] = pesticides
             end
             if text =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}/
               companies[i][:products][j][:date] = format_date text
             end
             companies[i][:products][j]
           when "textbody_level4"
-            problems = format_problems attribute.xpath("./small").text
-            companies[i][:products][j][:problems] = problems
+            pesticides = format_pesticides attribute.xpath("./small").text
+            companies[i][:products][j][:pesticides] = pesticides
           end
         end
         companies
       end
 
       def format_address raw
+        raw.encode!('UTF-8', :invalid => :replace, :undef => :replace)
         raw.rstrip.split("\n").drop(3).map do |s|
           s.gsub(",", "").strip
         end.join(", ")
       end
 
       def format_date raw
-        if raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}\s/
-          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}\s)/.match(raw).captures.first
+        if raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}/
+          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4})/.match(raw).captures.first
           Date.strptime(date, "%m/%d/%Y")
-        elsif raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}\s/
-          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}\s)/.match(raw).captures.first
+        elsif raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}/
+          date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2})/.match(raw).captures.first
           Date.strptime(date, "%m/%d/%y")
         end
       end
-      def format_problems raw
-        raw.sub("Problems:", "").gsub("\n", "").strip.split(";").each {|i| i.strip!}
+      def format_pesticides raw
+        raw.sub("Problems:", "").split(";").map do |i| 
+          i.upcase.gsub(/\A\p{Space}*/,'')
+        end
       end
 
     end

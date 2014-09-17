@@ -34,9 +34,7 @@ module FDA
         let(:product)    { detention[:products].first }
 
         context 'For normal enteries' do
-          let(:detention)  { detentions.first }
-          let(:product)    { detention[:products].first }
-          let(:problem)    { product[:problems].first }
+          let(:pesticide)    { product[:pesticides].first }
           it 'extracts the company name' do
             expect(detention[:name]).to eq "Haji Bashir Ahmad Commercial Firm"
           end
@@ -54,9 +52,13 @@ module FDA
             expect(product[:date]).to eq Date.new(2013, 4, 20)
           end
 
-          it 'extracts the problems' do
-            expect(product[:problems].class).to eq Array.new.class
-            expect(problem).to eq 'FLUSILAZOLE'
+          it 'extracts the pesticides' do
+            expect(product[:pesticides].class).to eq Array.new.class
+            expect(pesticide).to eq 'DIMETHOATE'
+          end
+
+          it 'extracts the second + pesticide correctly' do
+            expect(product[:pesticides][1]).to eq 'LAMBDA-CYHALOTHRIN'
           end
         end
 
@@ -68,13 +70,13 @@ module FDA
           end
         end
 
-        context 'incorrectly input problems' do
+        context 'incorrectly input pesticides' do
           let(:detention)  { detentions[-1] }
           let(:product)    { detention[:products].first }
-          let(:problem)    { product[:problems].first }
+          let(:problem)    { product[:pesticides].first }
           it 'extracts the problem from the notes' do
-            expect(product[:problems].class).to eq Array.new.class
-            expect(problem).to eq 'Fenobucarb'
+            expect(product[:pesticides].class).to eq Array.new.class
+            expect(problem).to eq 'fenobucarb'
           end
         end
       end
