@@ -1,9 +1,9 @@
 class Import < ActiveRecord::Base
   validates :items_created, presence: true
 
-  def refresh
+  def refresh data=client.fetch
     initial_product_count = Product.count
-    site_data = client.fetch
+    site_data = data
     create_records_from site_data
     self.items_created = Product.count - initial_product_count
     self.save

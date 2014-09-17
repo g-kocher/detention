@@ -31,3 +31,46 @@
     :date: Mon, 16 Mar 1998
     :pesticides: 
     - LINDANE
+:update:
+- :name: Haji Bashir Ahmad Commercial Firm
+  :address: Charagh Ali Market, kabul, AF-KAB AFGHANISTAN
+  :products:
+  - :name: 20 B - - 10  Raisins,  Dried or Paste
+    :date: Tue, 9 Sep 2014
+    :pesticides:
+    - FLUSILAZOLE
+  - :name: 21 H - H 05  Dates, Dried or Paste
+    :date: Mon, 16 Mar 1998
+    :pesticides: 
+    - LINDANE
+  - :name: 99 Z - - 15 Lattes
+    :date: Tue, 16 Sept 2014
+    :pesticides:
+    - CAFFIENE
+- :name: Tabasom Raisin Processing Factory
+  :address: Bagram Road  Industrial Park Pul-E-Charkhi, Kabul, AF-KAB AFGHANISTAN
+  :products:
+  - :name: 20 A - - 10  Raisins (Dried Grapes)  (Berry)
+    :date: Tue, 03 Aug 2010
+    :pesticides:
+    - DIMETHOATE
+    - LAMBDA-CYHALOTHRIN
+  - :name: 20 B - - 10  Raisins,  Dried or Paste
+    :date: Tue, 03 Aug 2010
+    :pesticides:
+    - DIMETHOATE
+    - LAMBDA-CYHALOTHRIN
+- :name: O & D Office National Del A Dattess
+  :address: unknown, Beskra, ALGERIA
+  :products:
+  - :name: 21 H - H 05  Dates, Dried or Paste
+    :date: Mon, 16 Mar 1998
+    :pesticides: 
+    - LINDANE
+- :name: Starbucks
+  :address: Seattle, WA
+  :products:
+  - :name: 11 A - - 03 Americano
+    :date: Tue, 16 Sept 2014
+    :pesticides:
+    - CAFFIENE
