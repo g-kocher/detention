@@ -1,3 +1,10 @@
 <h1>Pesticides Alerts</h1>
-<h2>Import Alert 99-08: Detention Without Physical Examination Of Processed Foods for Pesticides</h2>
+<h3>Import Alert 99-08: Detention Without Physical Examination Of Processed Foods for Pesticides</h3>
+<% unless @products.nil? %>
+  <div>
+    <%  @products.each do |p| %>
+      <p><%= p.company.name %> - <%= p.date_published.strftime("%m/%d/%Y") %></p>
+    <% end %>
+  </div>
+<% end %>
 <p>Data collected from the <%= link_to 'FDA site', "http://www.accessdata.fda.gov/cms_ia/importalert_259.html"%>.</p>
