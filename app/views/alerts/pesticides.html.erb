@@ -3,11 +3,11 @@
 <% unless @products.nil? %>
   <div>
     <%  @product_months.keys.sort.reverse.each do |month| %>
-      <h3><%= month.strftime('%B, %Y')%></h3>
+      <h4><%= "#{month.strftime('%B %Y')} (#{@product_months[month].count})" %></h4>
       <ul>
-      <% @product_months[month].each do |product| %>
+      <% @product_months[month].reverse.each do |product| %>
         <li>
-          <%= "#{product.company.name}" %>
+          <%= "#{product.company.name} - #{product.date_published.strftime('%m/%d/%Y')}" %>
           <ul>
             <% product.pesticides.each do |pest| %>
               <li><%= pest.name %></li>
