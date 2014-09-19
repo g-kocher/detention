@@ -84,6 +84,9 @@ module FDA
         if raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4}/
           date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{4})/.match(raw).captures.first
           Date.strptime(date, "%m/%d/%Y")
+        elsif raw =~ /8\/4\/62/  # Not sure if this is the best for a single exception
+          date = "8/4/92"
+          Date.strptime(date, "%m/%d/%y")
         elsif raw =~ /[0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2}/
           date = /([0-1]?[0-9]\/[0-3]?[0-9]\/[0-9]{2})/.match(raw).captures.first
           Date.strptime(date, "%m/%d/%y")
