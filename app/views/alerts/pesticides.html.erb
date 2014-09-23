@@ -2,17 +2,27 @@
   <h1>Pesticides Alerts</h1>
   <h3>Import Alert 99-08: Detention Without Physical Examination Of Processed Foods for Pesticides</h3>
 </div>
-<div>
-<ul>
-<% @companies.each do |company| %>
-  <li><strong><%= company.name %></strong></li>
-  <ul>
-  <% company.products.each do |product| %>
-    <li><%= "#{product.name.gsub(/([0-9]{2}\W[A-Z,-]\W[A-Z,-]\W[A-Z,-]\W[0-9,-]{2}\W\W)/, "")} - #{product.date_published.strftime("%m/%d/%Y")} "%></li>
-  <% end %>
-  </ul>
-<% end %>
-</ul>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-8 offset-sm-2">
+    <% @companies.each do |company| %>
+    <div class='panel panel-default'>
+      <div class="panel-heading">
+        <strong><%= company.name %></strong> | <%= company.address.split[-1].capitalize %>
+        <div class="pull-right">
+          <span class="badge"><%= company.products_count %></span> <%= "product".pluralize(company.products_count) %>
+        </div>
+      </div>
+      <% company.products.each do |product| %>
+        <ul class='list-group'>
+          <li class='list-group-item'><%= "#{product.name.gsub(/([0-9]{2}\W[A-Z,-]\W[A-Z,-]\W[A-Z,-]\W[0-9,-]{2}\W\W)/, "")} - #{product.date_published.strftime("%m/%d/%Y")} "%></li>
+        </ul>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
 </div>
 
+<div class="row">
 <p>Data collected from the <%= link_to 'FDA site', "http://www.accessdata.fda.gov/cms_ia/importalert_259.html"%>.</p>
+</div>
