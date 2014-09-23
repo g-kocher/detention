@@ -2,42 +2,17 @@
   <h1>Pesticides Alerts</h1>
   <h3>Import Alert 99-08: Detention Without Physical Examination Of Processed Foods for Pesticides</h3>
 </div>
-
-<div class="row">
-  <div class="col-sm-8 offset-sm-1 col-md-7 offset-md-2">
-    <% unless @products.nil? %>
-      <div class='panel-group' id='accordion'>
-        <div class="panel panel-default">
-          
-          <% @product_months.keys.sort.reverse.each do |month| %>  
-            <div class="panel-heading">
-              <h4 class='panel-title'>
-                <a data-toggle="collapse" data-parent="#accordion" href="#<%= month.strftime('%B_%Y')%>"> 
-                  <%= "#{month.strftime('%B %Y')} (#{@product_months[month].count})" %>
-                </a>
-              </h4>
-            </div>
-            
-            <div id="<%= month.strftime('%B_%Y')%>" class="panel-collapse collapse <%= "in" if month == @product_months.keys.sort.reverse.first %>">
-              <div class="panel-body">
-                <ul>
-                  <% @product_months[month].reverse.each do |product| %>
-                    <li>
-                      <%= "#{product.company.name} - #{product.date_published.strftime('%m/%d/%Y')}" %>
-                      <ul>
-                        <% product.pesticides.each do |pest| %>
-                          <li><%= pest.name %></li>
-                        <% end %>
-                      </ul>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div>
+<ul>
+<% @companies.each do |company| %>
+  <li><strong><%= company.name %></strong></li>
+  <ul>
+  <% company.products.each do |product| %>
+    <li><%= "#{product.name.gsub(/([0-9]{2}\W[A-Z,-]\W[A-Z,-]\W[A-Z,-]\W[0-9,-]{2}\W\W)/, "")} - #{product.date_published.strftime("%m/%d/%Y")} "%></li>
+  <% end %>
+  </ul>
+<% end %>
+</ul>
 </div>
+
 <p>Data collected from the <%= link_to 'FDA site', "http://www.accessdata.fda.gov/cms_ia/importalert_259.html"%>.</p>

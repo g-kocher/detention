@@ -1,6 +1,6 @@
 class AlertsController < ApplicationController
   def pesticides
-    @products = Product.order('date(date_published)').includes(:company, :pesticides)
-    @product_months = @products.group_by {|p| p.date_published.beginning_of_month }
+    @companies = Company.includes(:products).order('products.date_published DESC').limit(200)
+
   end
 end
