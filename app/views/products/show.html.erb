@@ -19,7 +19,7 @@
           <ul class='list-group'>
           <% @related_products.each do |product| %>
             <li class="list-group-item">
-              <%= link_to("#{format_product_name product.name}", product_path(product)) + " | #{product.date_published.strftime("%m/%d/%Y")}" %>
+              <%= link_to(format_product_name(product.name), product_path(product)) + " | " + product.date_published.strftime("%m/%d/%Y") %>
             </li>
           <% end %>
           </ul>

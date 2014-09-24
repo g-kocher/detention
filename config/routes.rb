@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'companies/:id' => 'companies#show', as: :company
+
   get 'alerts/pesticides' => 'alerts#pesticides', as: :pesticides
   get 'products/:id' => 'products#show', as: :product
   # The priority is based upon order of creation: first created -> highest priority.
