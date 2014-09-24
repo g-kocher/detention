@@ -5,6 +5,7 @@ class CreateCompanies < ActiveRecord::Migration
       t.string :address
       t.string :phone
       t.string :contact
+      t.integer :products_count
 
       t.timestamps
     end

@@ -4,14 +4,17 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 col-sm-8 offset-sm-2">
+  <div class="col-sm-12 col-md-8 offset-md-2">
     <% @companies.each do |company| %>
     <div class='panel panel-default'>
       <div class="panel-heading">
-        <strong><%= company.name %></strong> | <%= company.address.split[-1].capitalize %>
+        <strong><%= company.name %></strong>
         <div class="pull-right">
           <span class="badge"><%= company.products_count %></span> <%= "product".pluralize(company.products_count) %>
         </div>
+      </div>
+      <div class="panel-body">
+        <%= company.address %>
       </div>
       <% company.products.each do |product| %>
         <ul class='list-group'>

@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  belongs_to :company
+  belongs_to :company, counter_cache: true
   has_many :problems
   has_many :pesticides, through: :problems
 
