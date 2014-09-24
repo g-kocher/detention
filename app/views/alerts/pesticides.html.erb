@@ -11,14 +11,13 @@
         <strong><%= company.name %></strong>
         <div class="pull-right">
           <span class="badge"><%= company.products_count %></span> <%= "product".pluralize(company.products_count) %>
-        </div>
+        </div><br>
+        <small><%= company.address.gsub(",", '<br />').html_safe %></small>
       </div>
-      <div class="panel-body small">
-        <%= company.address.gsub(",", '<br />').html_safe %>
-      </div>
+        
       <% company.products.each do |product| %>
         <ul class='list-group'>
-          <li class='list-group-item'><%= "#{product.name.gsub(/([0-9]{2}\W[A-Z,-]\W[A-Z,-]\W[A-Z,-]\W[0-9,-]{2}\W\W)/, "")} - #{product.date_published.strftime("%m/%d/%Y")} "%></li>
+          <li class='list-group-item'><%= link_to("#{format_product_name product.name}", product_path(product)) + " | #{product.date_published.strftime("%m/%d/%Y")}"%></li>
         </ul>
       <% end %>
     </div>
