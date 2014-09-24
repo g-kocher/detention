@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 offset-md-2">
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <strong><%= format_product_name @product.name %></strong>
+          <%=" | Date Published: " + @product.date_published.strftime("%m/%d/%Y")%>
+        </div>
+
+        <div class="panel-body">
+          Company: <%= @product.company.name %><br>
+          Pesticides:
+          <%= @product.pesticides.map {|pest| pest.name}.join(", ") %>
+        </div>
+
+        <% if @related_products.size > 0 %>
+          <div class="panel-body"><%= "This company has #{@product.company.products_count - 1} more" + " product".pluralize(@related_products.size) %>:</div>  
+          <ul class='list-group'>
+          <% @related_products.each do |product| %>
+            <li class="list-group-item">
+              <%= link_to("#{format_product_name product.name}", product_path(product)) + " | #{product.date_published.strftime("%m/%d/%Y")}" %>
+            </li>
+          <% end %>
+          </ul>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
