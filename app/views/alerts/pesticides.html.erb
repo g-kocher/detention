@@ -13,8 +13,8 @@
           <span class="badge"><%= company.products_count %></span> <%= "product".pluralize(company.products_count) %>
         </div>
       </div>
-      <div class="panel-body">
-        <%= company.address %>
+      <div class="panel-body small">
+        <%= company.address.gsub(",", '<br />').html_safe %>
       </div>
       <% company.products.each do |product| %>
         <ul class='list-group'>
