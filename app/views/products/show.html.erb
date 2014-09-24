@@ -9,7 +9,7 @@
         </div>
 
         <div class="panel-body">
-          Company: <%= @product.company.name %><br>
+          Company: <%= link_to @product.company.name, company_path(@product.company) %><br>
           Pesticides:
           <%= @product.pesticides.map {|pest| pest.name}.join(", ") %>
         </div>
