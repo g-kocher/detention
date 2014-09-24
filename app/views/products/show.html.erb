@@ -15,7 +15,7 @@
         </div>
 
         <% if @related_products.size > 0 %>
-          <div class="panel-body"><%= "This company has #{@product.company.products_count - 1} more" + " product".pluralize(@related_products.size) %>:</div>  
+          <div class="panel-body"><%= "This company has #{@product.company.products_count - 1} other" + " product".pluralize(@related_products.size) %>:</div>  
           <ul class='list-group'>
           <% @related_products.each do |product| %>
             <li class="list-group-item">
