@@ -8,11 +8,10 @@
     <% @companies.each do |company| %>
     <div class='panel panel-default'>
       <div class="panel-heading">
-        <strong><%= company.name %></strong>
+        <strong><%= link_to company.name, company_path(company) %></strong>
         <div class="pull-right">
           <span class="badge"><%= company.products_count %></span> <%= "product".pluralize(company.products_count) %>
-        </div><br>
-        <small><%= company.address.gsub(",", '<br />').html_safe %></small>
+        </div>
       </div>
         
       <% company.products.each do |product| %>
