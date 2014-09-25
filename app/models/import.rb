@@ -7,6 +7,9 @@ class Import < ActiveRecord::Base
     create_records_from site_data
     self.items_created = Product.count - initial_product_count
     self.save
+    if self.items_created > 0
+      AlertMailer.data_update_email(self.items_created).deliver
+    end
   end
 
   private

@@ -6,6 +6,5 @@ class Product < ActiveRecord::Base
   validates :name, presence: true
   validates :date_published, presence: true
   validates :company_id, presence: true
-
   
 end

@@ -3,8 +3,9 @@
   <h3>Import Alert 99-08: Detention Without Physical Examination Of Processed Foods for Pesticides</h3>
 </div>
 
-<div class="row">
-  <div class="col-sm-12 col-md-8 offset-md-2">
+
+<div class="container">
+  <div class="col-sm-12 col-md-8 col-md-offset-2">
     <table class="table table-striped">
       <thead>
         <th>Company</th>
@@ -15,8 +16,8 @@
       <% @companies.each do |company| %>
         <tr>
           <td><strong><%= link_to company.name, company_path(company) %></strong></td>
-          <td><%= company.products.last.date_published.strftime("%m/%d/%Y") %></td>
-          <td><span class="badge"><%= company.products_count %></span></td>
+          <td class='text-center'><%= company.products.last.date_published.strftime("%m/%d/%Y") %></td>
+          <td class='text-center'><span class="badge"><%= company.products_count %></span></td>
         </tr>
       <% end %>
       </tbody>

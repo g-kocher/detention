@@ -4,8 +4,11 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1></h1>
     <p>
+      So there's a new product(s) on the FDA's Import Alert List...<br>
+      <% @products.each do |product| %>
+        <%= link_to product.name.gsub(/([0-9]{2}\W[A-Z,-]\W[A-Z,-]\W[A-Z,-]\W[0-9,-]{2}\W\W)/, ""), product_url(product) %><br>
+      <% end %>
     </p>
   </body>
 </html>

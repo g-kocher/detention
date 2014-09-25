@@ -1,10 +1,10 @@
 class AlertMailer < ActionMailer::Base
-  default from: "garrett@fdaimportalerts.info"
+  default from: "g.kocher@gmail.com"
 
-  def data_update_email(updated_items)
-    @companies = Companies.joins(:products).order('products.date_updated DESC').limit(updated_items).includes(:products)
+  def data_update_email items_created
+    @products = Product.order(created_at: :desc).limit(items_created)
     @distribution_list = ['g.kocher@gmail.com', 'garrettresponse@gmail.com']
-    mail(to: @distribution_list, subject: "FDA Import Alert Updated: #{updated_items} #{'item'.pluralize(updated_items)}")
+    mail(bcc: @distribution_list, subject: "FDA Import Alert Update")
   end
 
 
