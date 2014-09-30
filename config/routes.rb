@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   get 'companies/:id' => 'companies#show', as: :company
-
-  get 'alerts/pesticides' => 'alerts#pesticides', as: :pesticides
   get 'products/:id' => 'products#show', as: :product
+  get 'alerts/pesticides' => 'alerts#pesticides', as: :pesticides
+  resources 'contacts', only: [:new, :create]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'alerts#pesticides'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
