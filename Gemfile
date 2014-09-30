@@ -19,6 +19,8 @@ gem 'simple_form', '~> 3.0.2'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
+gem 'devise', '3.3.0'
+
 gem 'nokogiri', '~>1.5.11'
 
 gem 'rails_12factor', '0.0.2'
