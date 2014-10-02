@@ -14,7 +14,7 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 gem 'mail_form', '~> 1.5.0'
-gem 'simple_form', '~> 3.0.2'
+gem 'simple_form', '~> 3.1.0.rc1'
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development

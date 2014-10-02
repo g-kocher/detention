@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>FDA Import Alerts</title>
   <meta name="description" content="FDA Import Alerts collected from the government site and offering subscriptions to notifications. Allowing companies to proactively address import issues.">
   <meta name="keywords" content="FDA, import, alert, import alert, import alert notification, import alert notifications, import alerts, import alerts notification, import alerts notifications, FDA import alerts">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-  <%= render "layouts/navbar" %>
-
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <header>
+    <%= render "layouts/navbar" %>
+  </header>
+  <% if notice || alert %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  <% end %>
 
   <div class="container">
   <%= yield %>
