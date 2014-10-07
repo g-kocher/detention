@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   get 'companies/:id' => 'companies#show', as: :company
   get 'products/:id' => 'products#show', as: :product
   get 'alerts/pesticides' => 'alerts#pesticides', as: :pesticides
