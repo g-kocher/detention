@@ -12,9 +12,9 @@ RSpec.describe Import, :type => :model do
   end
 
   describe "#refresh" do
+    before(:each) { expect(import).to receive(:send_mail).and_return(true) }
 
     context "empty database" do
-
 
       it 'saves companies' do
         expect{ import.refresh(data[:initial]) }.to change{ Company.count }.from(0).to(3)
@@ -31,6 +31,7 @@ RSpec.describe Import, :type => :model do
 
     context 'database with data' do
       before(:each) do
+        expect(import).to receive(:send_mail).and_return(true)
         import.refresh data[:initial]
       end
 

@@ -5,23 +5,27 @@ class Import < ActiveRecord::Base
     initial_product_count = Product.count
     site_data = data
     create_records_from site_data
-    self.items_created = Product.count - initial_product_count
-    self.save
-    if self.items_created > 0
-      AlertMailer.data_update_email(self.items_created).deliver
+    items_created = Product.count - initial_product_count
+    save
+    if items_created > 0
+      send_mail items_created
     end
   end
 
   private
+  def send_mail items_created
+    AlertMailer.data_update_email(items_created).deliver
+  end
+
   def client
     FDA::Detention::Client.new('http://www.accessdata.fda.gov/cms_ia/importalert_259.html')
   end
 
   def create_records_from(data)
     data.each do |comp|
-      company = Company.where(name: comp[:name]).first_or_create {|r| r.address = comp[:address]}
+      company = Company.where(name: comp[:name], address: comp[:address]).first_or_create
       comp[:products].each do |prod|
-        product = company.products.where(name: prod[:name]).first_or_create {|p| p.date_published = prod[:date]}
+        product = Product.where(company_id: company.id, name: prod[:name], date_published: prod[:date]).first_or_create
         unless prod[:pesticides].nil?
           prod[:pesticides].each do |pest|
             pesticide = Pesticide.where(name: pest).first_or_create
