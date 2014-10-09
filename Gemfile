@@ -26,6 +26,7 @@ gem 'puma', '~> 2.9.1'
 gem 'rack-timeout', '~> 0.0.4'
 
 gem 'dynamic_sitemaps', '~> 2.0.0'
+gem 'google-analytics-rails', '~>0.0.6'
 
 
 group :development, :test do
