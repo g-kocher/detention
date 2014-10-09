@@ -25,6 +25,8 @@ gem 'rails_12factor', '0.0.2'
 gem 'puma', '~> 2.9.1'
 gem 'rack-timeout', '~> 0.0.4'
 
+gem 'dynamic_sitemaps', '~> 2.0.0'
+
 
 group :development, :test do
   gem "rb-fsevent", "~> 0.9.1"

@@ -5,4 +5,5 @@ class Company < ActiveRecord::Base
   validates :name, presence: true
   validates :address, presence: true
 
+  scope :every_single_one, -> {all}
 end

@@ -51,6 +51,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     diff-lcs (1.2.5)
+    dynamic_sitemaps (2.0.0)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -208,6 +209,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.2.0)
   capybara (= 2.4.1)
   coffee-rails (~> 4.0.0)
+  dynamic_sitemaps (~> 2.0.0)
   factory_girl_rails (= 4.4.1)
   faker (= 1.4.3)
   guard (= 2.6.1)
