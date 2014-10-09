@@ -5,15 +5,14 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = Contact.new
+    @contact = Contact.new(params[:contact])
     @contact.request = request
     if @contact.deliver
       flash.now[:notice] = 'Thanks for your message!'
-      render :root
+      redirect :root
     else
       flash.now[:error] = 'Cannot send message.'
       render :new
     end
   end
-
 end
