@@ -5,4 +5,7 @@ module ApplicationHelper
   def format_address address
     address.gsub(",", '<br />').html_safe
   end
+  def last_published company
+    company.products.map {|product| product.date_published}.max.strftime("%m/%d/%Y")
+  end
 end

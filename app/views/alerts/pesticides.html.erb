@@ -16,7 +16,7 @@
       <% @companies.each do |company| %>
         <tr>
           <td><strong><%= link_to company.name, company_path(company) %></strong></td>
-          <td class='text-center'><%= company.products.last.date_published.strftime("%m/%d/%Y") %></td>
+          <td class='text-center'><%= last_published company %></td>
           <td class='text-center'><span class="badge"><%= company.products_count %></span></td>
         </tr>
       <% end %>
