@@ -14,10 +14,9 @@ end
 # using "resources :pages" in config/routes.rb. This will also
 # automatically set <lastmod> to the date and time in page.updated_at:
 #
-sitemap_for Company.every_single_one
-sitemap_for Product.every_single_one
-#sitemap_for Pesticide.every_single_one
-
+sitemap_for Company.all
+sitemap_for Product.all
+#sitemap_for Pesticide.all
 
 # For products with special sitemap name and priority, and link to comments:
 #

@@ -5,5 +5,4 @@ class Pesticide < ActiveRecord::Base
 
   validates :name, presence: true
 
-  scope :every_single_one, -> {all}
 end

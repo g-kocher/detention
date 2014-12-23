@@ -8,5 +8,4 @@ class Product < ActiveRecord::Base
   validates :company_id, presence: true
 
   scope :recent, ->(number) { order(date_published: :desc).limit(number)}
-  scope :every_single_one, -> {all}  
 end
