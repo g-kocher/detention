@@ -6,7 +6,6 @@ RSpec.describe Company, :type => :model do
 
   describe 'basic model' do
     it { expect(company).to validate_presence_of   :name }
-    it { expect(company).to validate_uniqueness_of   :name }
 
     it { expect(company).to validate_presence_of   :address}
   end
