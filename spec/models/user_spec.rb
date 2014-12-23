@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
     it { expect(user).to validate_presence_of :user_id }
     it { expect(user).to validate_presence_of :name }
     it { expect(user).to validate_presence_of :email }
-    it { expect(user).to validate_presence_of :active }
 
   end
 end
