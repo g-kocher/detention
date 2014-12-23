@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ProductsController, :type => :controller do
 
+  let(:product) {FactoryGirl.create(:product)}
+
   describe "GET show" do
-    before(:each) { get :show, id: 1 }
+    before(:each) { get :show, id: product }
     it "returns http success" do
       expect(response).to be_success
     end
