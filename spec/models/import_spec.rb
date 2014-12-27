@@ -1,7 +1,5 @@
 # need to create a fixture for the refresh data
 
-
-
 require 'rails_helper'
 
 RSpec.describe Import, :type => :model do

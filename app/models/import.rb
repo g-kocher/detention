@@ -3,16 +3,16 @@ class Import < ActiveRecord::Base
 
   def refresh data=client.fetch
     site_data = data
-    new_products = create_records_from site_data
+    new_products_ids = create_records_from site_data
     save
-    if new_products.count > 0
-      send_mail new_products.count
+    if new_products_ids.count > 0
+      send_mail new_products_ids
     end
   end
 
   private
-  def send_mail items_created
-    AlertMailer.data_update_email(items_created).deliver
+  def send_mail product_ids_updated
+    AlertMailer.data_update_email( product_ids_updated ).deliver
   end
 
   def client
@@ -26,7 +26,7 @@ class Import < ActiveRecord::Base
       comp[:products].each do |prod|
         product = Product.where(company_id: company.id, name: prod[:name]).first_or_create do |product|
           product.date_published = prod[:date]
-          new_products << product
+          new_products << product.id
         end
         unless prod[:pesticides].nil?
           prod[:pesticides].each do |pest|
@@ -36,6 +36,5 @@ class Import < ActiveRecord::Base
         end
       end
     end
-    return new_products
   end
 end
