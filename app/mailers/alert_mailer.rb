@@ -1,13 +1,13 @@
 class AlertMailer < ActionMailer::Base
-  default from: ENV['DEFAULT_FROM_EMAIL']
 
-  def data_update_email items_created
-    @products = Product.recent(items_created)
-    @companies = @products.includes(:company).map{|p| p.company }.uniq
-    mail(bcc: email_list, subject: "FDA Import Alert Update")
+  def data_update_email product_ids_updated
+    @products = Product.includes(:company).find(product_ids_updated).map{ |p| p }
+    @companies = @products.map{ |product| product.company }
+    mail(bcc: email_list, subject: "FDA Import Alert Update", content_type: 'text/html')
   end
 
+  private
   def email_list
-    User.active.map{|user| user.email }
+    User.active.select(:email).map{ |user| user.email }
   end
 end
