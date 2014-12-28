@@ -40,3 +40,5 @@ group :development, :test do
   gem 'factory_girl_rails', '4.4.1'
   gem 'faker', '1.4.3'
 end
+
+gem 'simplecov', '~>0.9.1', :require => false, group: :test
