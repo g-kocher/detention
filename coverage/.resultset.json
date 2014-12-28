@@ -575,8 +575,8 @@
         null,
         1,
         1,
-        12,
-        12,
+        15,
+        15,
         null,
         null
       ],
@@ -585,9 +585,9 @@
         null,
         1,
         1,
+        12,
         10,
-        10,
-        10,
+        12,
         null,
         null
       ],
@@ -675,13 +675,13 @@
       "/Users/gko/code/detention/app/helpers/application_helper.rb": [
         1,
         1,
-        0,
+        1,
         null,
         1,
-        0,
+        1,
         null,
         1,
-        0,
+        3,
         null,
         null
       ],
@@ -875,6 +875,43 @@
         null,
         1,
         1,
+        null
+      ],
+      "/Users/gko/code/detention/spec/helpers/application_helper_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
         null
       ],
       "/Users/gko/code/detention/spec/helpers/companies_helper_spec.rb": [
@@ -1396,6 +1433,6 @@
         null
       ]
     },
-    "timestamp": 1419729954
+    "timestamp": 1419740863
   }
 }
