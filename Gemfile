@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.0'
 gem 'pg', '0.17.1'
 
 gem 'sass-rails', '~> 4.0.3'
@@ -18,8 +18,6 @@ gem 'simple_form', '~> 3.1.0.rc1'
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
-
-gem 'nokogiri', '~>1.5.11'
 
 gem 'rails_12factor', '0.0.2'
 gem 'puma', '~> 2.9.1'
