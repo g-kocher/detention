@@ -728,24 +728,21 @@
         null,
         null
       ],
-      "/Users/gko/code/detention/app/controllers/contacts_controller.rb": [
+      "/Users/gko/code/detention/app/controllers/welcome_controller.rb": [
         1,
-        null,
         1,
-        6,
         null,
         null,
         1,
-        4,
-        4,
-        4,
+        2,
         2,
         2,
         null,
-        2,
-        2,
+        0,
         null,
         null,
+        null,
+        1,
         null,
         null
       ],
@@ -755,44 +752,8 @@
         null,
         1,
         null
-      ],
-      "/Users/gko/code/detention/app/models/contact.rb": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        null,
-        1,
-        null,
-        null,
-        null,
-        null,
-        2,
-        null,
-        null
-      ],
-      "/Users/gko/code/detention/app/controllers/welcome_controller.rb": [
-        1,
-        1,
-        null,
-        null,
-        1,
-        0,
-        0,
-        0,
-        null,
-        0,
-        null,
-        null,
-        null,
-        1,
-        null,
-        null
       ]
     },
-    "timestamp": 1419747884
+    "timestamp": 1419838720
   }
 }
